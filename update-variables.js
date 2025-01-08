@@ -7,10 +7,10 @@ const port = 8000;
 app.use(express.json());
 
 // Path to the variables file
-const variablesFilePath = 'https://wxcc.onrender.com/variables.json';
+const variablesFilePath = 'https://wxcc-1.onrender.com/variables.json';
 
 // Endpoint to fetch variables
-app.get('https://wxcc.onrender.com/variables.json', (req, res) => {
+app.get('https://wxcc-1.onrender.com/variables.json', (req, res) => {
     fs.readFile(variablesFilePath, (err, data) => {
         if (err) {
             return res.status(500).send('Error reading variables file');
@@ -20,7 +20,7 @@ app.get('https://wxcc.onrender.com/variables.json', (req, res) => {
 });
 
 // Endpoint to update variables
-app.post('https://wxcc.onrender.com/update-variables.js', (req, res) => {
+app.post('https://wxcc.onrender.com:8000/update-variables.js', (req, res) => {
     const updatedVariables = req.body;
 
     // Save the updated variables to the JSON file
