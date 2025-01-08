@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "update-variables.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node update-variables.js",
+    "dev": "nodemon update-variables.js"
   },
   "keywords": [],
   "author": "Stuart Lane",
