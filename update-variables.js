@@ -7,10 +7,10 @@ const port = 8000;
 app.use(express.json());
 
 // Path to the variables file
-const variablesFilePath = 'https://stuartlane925.github.io/WxCC/variables.json';
+const variablesFilePath = 'https://wxcc.onrender.com/variables.json';
 
 // Endpoint to fetch variables
-app.get('https://stuartlane925.github.io/WxCC/variables.json', (req, res) => {
+app.get('https://wxcc.onrender.com/variables.json', (req, res) => {
     fs.readFile(variablesFilePath, (err, data) => {
         if (err) {
             return res.status(500).send('Error reading variables file');
