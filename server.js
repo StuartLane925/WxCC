@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname))); // Serve static files
+app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
 
 // Path to variables.json
 const variablesPath = path.join(__dirname, 'variables.json');
