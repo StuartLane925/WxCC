@@ -1,13 +1,18 @@
 {
   "name": "wxcc",
   "version": "1.0.0",
-  "license": "MIT",
-  "description": "WxCC combined frontend and backend",
+  "description": "A simple app for modifying variables",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
-  }
+    "express": "^4.17.1",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "author": "StuartLane925",
+  "license": "ISC"
 }
