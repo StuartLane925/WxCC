@@ -1,100 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Variables</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 300px;
-        }
-        label {
-            margin-top: 10px;
-        }
-        input, button {
-            margin-top: 5px;
-            padding: 8px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Variables Display</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #variables {
+      margin-top: 20px;
+    }
+    .variable {
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-    <h1>Modify Variables</h1>
-    <form id="variableForm">
-        <label for="Open">Open</label>
-        <input type="text" id="Open" name="Open" placeholder="Enter value for Open">
-        
-        <label for="Emergency">Emergency</label>
-        <input type="text" id="Emergency" name="Emergency" placeholder="Enter value for Emergency">
-        
-        <label for="CCBEnabled">CCBEnabled</label>
-        <input type="text" id="CCBEnabled" name="CCBEnabled" placeholder="Enter value for CCBEnabled">
-        
-        <button type="submit">Update Variables</button>
-    </form>
+  <h1>Current Variable Values</h1>
+  <div id="variables">
+    <!-- Variables will be displayed here -->
+  </div>
 
-    <script>
-        const apiBaseUrl = 'https://wxcc.onrender.com/api'; // Update with your Render backend URL
+  <script>
+    // Path to the variables.json file
+    const variablesJsonUrl = 'public/variables.json';
 
-        // Load variables from the backend
-        const loadVariables = async () => {
-            try {
-                const response = await fetch(`${apiBaseUrl}/variables`);
-                const variables = await response.json();
+    // Fetch variables from the JSON file
+    fetch(variablesJsonUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch variables.json');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Get the variables container
+        const variablesContainer = document.getElementById('variables');
 
-                document.getElementById('Open').value = variables.Open || '';
-                document.getElementById('Emergency').value = variables.Emergency || '';
-                document.getElementById('CCBEnabled').value = variables.CCBEnabled || '';
-            } catch (error) {
-                console.error('Error loading variables:', error);
-            }
-        };
+        // Clear any existing content
+        variablesContainer.innerHTML = '';
 
-        // Update variables in the backend
-        const updateVariables = async (updatedVariables) => {
-            try {
-                const response = await fetch(`${apiBaseUrl}/variables`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(updatedVariables),
-                });
-                const result = await response.json();
-                alert(result.message);
-            } catch (error) {
-                console.error('Error updating variables:', error);
-            }
-        };
-
-        // Handle form submission
-        document.getElementById('variableForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const updatedVariables = {
-                Open: document.getElementById('Open').value,
-                Emergency: document.getElementById('Emergency').value,
-                CCBEnabled: document.getElementById('CCBEnabled').value,
-            };
-
-            updateVariables(updatedVariables);
-        });
-
-        // Load variables on page load
-        loadVariables();
-    </script>
+        // Create and append variable elements dynamically
+        for (const [key, value] of Object.entries(data)) {
+          const variableElement = document.createElement('div');
+          variableElement.className = 'variable';
+          variableElement.innerHTML = `<strong>${key}:</strong> ${value}`;
+          variablesContainer.appendChild(variableElement);
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading variables:', error);
+        const variablesContainer = document.getElementById('variables');
+        variablesContainer.innerHTML = '<p style="color: red;">Error loading variables.</p>';
+      });
+  </script>
 </body>
 </html>
