@@ -1,0 +1,13 @@
+{
+  "name": "wxcc",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "WxCC combined frontend and backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
