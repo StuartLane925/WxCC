@@ -36,64 +36,63 @@
 <body>
     <h1>Modify Text Variables</h1>
     <form id="variableForm">
-        <label for="open">Open</label>
-        <input type="text" id="Open" name="Open" placeholder="Change Open Status">
+        <label for="Open">Open</label>
+        <input type="text" id="Open" name="Open" placeholder="Enter new Open">
         
         <label for="Emergency">Emergency</label>
-        <input type="text" id="Emergency" name="Emergency" placeholder="Change Emergency Status">
+        <input type="text" id="Emergency" name="Emergency" placeholder="Enter new Emergency">
         
         <label for="CCBEnabled">CCBEnabled</label>
-        <input type="text" id="CCBEnabled" name="CCBEnabled" placeholder="Change CCB Status">
+        <input type="text" id="CCBEnabled" name="CCBEnabled" placeholder="Enter new CCBEnabled">
         
         <button type="submit">Update Variables</button>
     </form>
 
     <script>
-        // Fetch the current variables from the server
+        // URL to the variables.json file
+        const variablesUrl = 'https://stuartlane925.github.io/WxCC/variables.json'; // Update with your actual URL
+
+        // Load variables from variables.json
         const loadVariables = async () => {
             try {
-                const response = await fetch('https://stuartlane925.github.io/WxCC/variables.json'); // Update with your server's URL
+                const response = await fetch(variablesUrl);
+                if (!response.ok) {
+                    throw new Error(`Failed to load variables: ${response.status}`);
+                }
                 const variables = await response.json();
-                document.getElementById('Open').value = variables.Open;
-                document.getElementById('Emergency').value = variables.Emergency;
-                document.getElementById('CCBEnabled').value = variables.CCBEnabled;
+
+                // Populate form fields with the loaded variables
+                document.getElementById('Open').value = variables.Open || '';
+                document.getElementById('Emergency').value = variables.Emergency || '';
+                document.getElementById('CCBEnabled').value = variables.CCBEnabled || '';
             } catch (error) {
                 console.error('Error loading variables:', error);
             }
         };
 
-        // Save updated variables to the server
-        const updateVariables = async (updatedVariables) => {
-            try {
-                const response = await fetch('https://stuartlane925.github.io/WxCC/update-variables', { // Update with your server's update endpoint
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedVariables)
-                });
-                if (response.ok) {
-                    alert('Variables updated successfully!');
-                } else {
-                    alert('Failed to update variables.');
-                }
-            } catch (error) {
-                console.error('Error updating variables:', error);
-            }
+        // Save updated variables locally (simulated, since GitHub Pages is read-only)
+        const updateVariables = (updatedVariables) => {
+            // Save the updated variables in localStorage (simulated backend behavior)
+            localStorage.setItem('textVariables', JSON.stringify(updatedVariables));
+            alert('Variables updated successfully (locally only)!');
         };
 
         // Handle form submission
-        document.getElementById('variableForm').addEventListener('submit', async (event) => {
+        document.getElementById('variableForm').addEventListener('submit', (event) => {
             event.preventDefault();
+
+            // Get updated values from the form
             const updatedVariables = {
-                greeting: document.getElementById('Open').value,
-                farewell: document.getElementById('Emergency').value,
-                motivation: document.getElementById('CCBEnabled').value
+                Open: document.getElementById('Open').value,
+                Emergency: document.getElementById('Emergency').value,
+                CCBEnabled: document.getElementById('CCBEnabled').value
             };
-            await updateVariables(updatedVariables);
+
+            // Simulate saving the updated variables
+            updateVariables(updatedVariables);
         });
 
-        // Load the current variables when the page loads
+        // Load the variables when the page loads
         loadVariables();
     </script>
 </body>
