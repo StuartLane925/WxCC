@@ -1,20 +1,13 @@
- {
-  "name": "WxCCTestSite",
+{
+  "name": "variable-modifier",
   "version": "1.0.0",
-  "main": "update-variables.js",
+  "description": "Backend for managing variable values",
+  "main": "server.js",
   "scripts": {
-    "start": "node update-variables.js",
-    "dev": "nodemon update-variables.js"
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "Stuart Lane",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
   }
 }
-
-
