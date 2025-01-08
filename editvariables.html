@@ -52,7 +52,7 @@
         // Fetch the current variables from the server
         const loadVariables = async () => {
             try {
-                const response = await fetch('https://wxcc.onrender.com/variables.json'); // Update with your server's URL
+                const response = await fetch('https://wxcc-1.onrender.com/variables.json'); // Update with your server's URL
                 const variables = await response.json();
                 document.getElementById('Open').value = variables.Open;
                 document.getElementById('Emergency').value = variables.Emergency;
