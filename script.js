@@ -3,12 +3,17 @@ const apiUrl = '/api/variables'; // Backend API URL
 // Fetch current variable values from the backend
 async function fetchVariables() {
   try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
+    const response = await fetch(apiUrl); // Make the GET request
+    const data = await response.json(); // Parse the JSON response
+
+    // Ensure the data is logged in the console
+    console.log('Fetched Variables:', data);
+
+    // Get the container where variables will be displayed
     const variablesContainer = document.getElementById('variables');
     variablesContainer.innerHTML = ''; // Clear existing variables
 
-    // Dynamically create input fields for each variable
+    // Loop through the data and create input fields for each variable
     Object.entries(data).forEach(([key, value]) => {
       const variableDiv = document.createElement('div');
       variableDiv.className = 'variable';
@@ -19,13 +24,13 @@ async function fetchVariables() {
       variablesContainer.appendChild(variableDiv);
     });
   } catch (error) {
-    console.error('Error fetching variables:', error);
+    console.error('Error fetching variables:', error); // Log any errors
   }
 }
 
 // Update variables and send them to the backend
 async function updateVariables() {
-  const inputs = document.querySelectorAll('#variables input');
+  const inputs = document.querySelectorAll('#variables input'); // Get all input fields
   const updatedVariables = {};
 
   // Collect the updated values from the input fields
@@ -34,20 +39,21 @@ async function updateVariables() {
   });
 
   try {
+    // Send the updated variables to the backend
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedVariables),
     });
 
-    const result = await response.json();
+    const result = await response.json(); // Get the response from the backend
     if (result.success) {
       alert('Variables updated successfully!');
     } else {
       alert('Failed to update variables.');
     }
   } catch (error) {
-    console.error('Error updating variables:', error);
+    console.error('Error updating variables:', error); // Log any errors
   }
 }
 
