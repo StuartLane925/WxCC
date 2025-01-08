@@ -49,50 +49,51 @@
     </form>
 
     <script>
-        // URL to the variables.json file
-        const variablesUrl = 'https://stuartlane925.github.io/WxCC/variables.json'; // Update with your actual URL
-
-        // Load variables from variables.json
+        // Fetch the current variables from the server
         const loadVariables = async () => {
             try {
-                const response = await fetch(variablesUrl);
-                if (!response.ok) {
-                    throw new Error(`Failed to load variables: ${response.status}`);
-                }
+                const response = await fetch('https://wxcc.onrender.com/variables.json'); // Update with your server's URL
                 const variables = await response.json();
-
-                // Populate form fields with the loaded variables
-                document.getElementById('Open').value = variables.Open || '';
-                document.getElementById('Emergency').value = variables.Emergency || '';
-                document.getElementById('CCBEnabled').value = variables.CCBEnabled || '';
+                document.getElementById('Open').value = variables.Open;
+                document.getElementById('Emergency').value = variables.Emergency;
+                document.getElementById('CCBEnabled').value = variables.CCBEnabled;
             } catch (error) {
                 console.error('Error loading variables:', error);
             }
         };
 
-        // Save updated variables locally (simulated, since GitHub Pages is read-only)
-        const updateVariables = (updatedVariables) => {
-            // Save the updated variables in localStorage (simulated backend behavior)
-            localStorage.setItem('textVariables', JSON.stringify(updatedVariables));
-            alert('Variables updated successfully (locally only)!');
+        // Save updated variables to the server
+        const updateVariables = async (updatedVariables) => {
+            try {
+                const response = await fetch('https://wxcc.onrender.com/update-variables', { // Update with your server's update endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedVariables)
+                });
+                if (response.ok) {
+                    alert('Variables updated successfully!');
+                } else {
+                    alert('Failed to update variables.');
+                }
+            } catch (error) {
+                console.error('Error updating variables:', error);
+            }
         };
 
         // Handle form submission
-        document.getElementById('variableForm').addEventListener('submit', (event) => {
+        document.getElementById('variableForm').addEventListener('submit', async (event) => {
             event.preventDefault();
-
-            // Get updated values from the form
             const updatedVariables = {
                 Open: document.getElementById('Open').value,
                 Emergency: document.getElementById('Emergency').value,
                 CCBEnabled: document.getElementById('CCBEnabled').value
             };
-
-            // Simulate saving the updated variables
-            updateVariables(updatedVariables);
+            await updateVariables(updatedVariables);
         });
 
-        // Load the variables when the page loads
+        // Load the current variables when the page loads
         loadVariables();
     </script>
 </body>
