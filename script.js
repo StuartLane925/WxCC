@@ -1,4 +1,4 @@
-const apiUrl = '/api/variables'; // Backend API URL
+const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Backend API URL
 
 // Fetch current variable values from the backend
 async function fetchVariables() {
