@@ -5,6 +5,8 @@ const allowedValues = {
   Open: ['Open', 'Closed',],
   Emergency: ['Yes', 'No', 'Hurricane'],
   CCBEnabled: ['Enabled', 'Disabled'],
+  WhiteboardActive: ['Yes', 'No'],
+  WhiteboardMessage: ['1', '2', '3'],
 };
 
 // Fetch current variable values from the backend
