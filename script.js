@@ -2,11 +2,11 @@ const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Use the backend API
 
 // Define allowed values for each variable
 const allowedValues = {
-  Open: ['Open', 'Closed'],
-  Emergency: ['Yes', 'No', 'Hurricane'],
+  Open: ['Open', 'Closed', 'Emergency'],
+  Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
-  WhiteboardActive: ['Yes', 'No'],
-  WhiteboardMessage: ['1', '2', '3'],
+  WhiteboardActive: ['Active', 'Inactive'], // Allowed values for WhiteboardActive
+  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'], // No predefined values for WhiteboardMessage
 };
 
 // Fetch current variable values from the backend
@@ -20,7 +20,7 @@ async function fetchVariables() {
     const variablesContainer = document.getElementById('variables');
     variablesContainer.innerHTML = ''; // Clear existing variables
 
-    // Loop through the data and create dropdowns for each variable
+    // Loop through the data and create dropdowns or text inputs for each variable
     Object.entries(data).forEach(([key, value]) => {
       const variableDiv = document.createElement('div');
       variableDiv.className = 'variable';
