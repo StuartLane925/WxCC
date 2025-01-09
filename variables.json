@@ -2,6 +2,6 @@
   "Open": "Yes",
   "Emergency": "No",
   "CCBEnabled": "True"
-  "Whiteboard Active": "No"
-  "Whiteboard Message": "0"
+  "WhiteboardActive": "No"
+  "WhiteboardMessage": "0"
 }
