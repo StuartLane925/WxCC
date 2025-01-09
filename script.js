@@ -1,4 +1,11 @@
-const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Backend API URL
+const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Use the backend API URL
+
+// Define allowed values for each variable
+const allowedValues = {
+  Open: ['Open', 'Closed',],
+  Emergency: ['Yes', 'No', 'Hurricane'],
+  CCBEnabled: ['Enabled', 'Disabled'],
+};
 
 // Fetch current variable values from the backend
 async function fetchVariables() {
@@ -6,40 +13,60 @@ async function fetchVariables() {
     const response = await fetch(apiUrl); // Make the GET request
     const data = await response.json(); // Parse the JSON response
 
-    // Ensure the data is logged in the console
-    console.log('Fetched Variables:', data);
+    console.log('Fetched Variables:', data); // Log fetched data
 
-    // Get the container where variables will be displayed
     const variablesContainer = document.getElementById('variables');
     variablesContainer.innerHTML = ''; // Clear existing variables
 
-    // Loop through the data and create input fields for each variable
+    // Loop through the data and create dropdowns for each variable
     Object.entries(data).forEach(([key, value]) => {
       const variableDiv = document.createElement('div');
       variableDiv.className = 'variable';
-      variableDiv.innerHTML = `
-        <label>${key}:</label>
-        <input type="text" id="${key}" value="${value}" />
-      `;
+
+      // Check if there are allowed values for this variable
+      const options = allowedValues[key] || [];
+
+      if (options.length > 0) {
+        // Create a dropdown if options are defined
+        const selectElement = document.createElement('select');
+        selectElement.id = key;
+
+        options.forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option;
+          optionElement.textContent = option;
+          if (option === value) optionElement.selected = true; // Set current value as selected
+          selectElement.appendChild(optionElement);
+        });
+
+        variableDiv.innerHTML = `<label>${key}:</label>`;
+        variableDiv.appendChild(selectElement);
+      } else {
+        // Fallback to a text input if no predefined options
+        variableDiv.innerHTML = `
+          <label>${key}:</label>
+          <input type="text" id="${key}" value="${value}" />
+        `;
+      }
+
       variablesContainer.appendChild(variableDiv);
     });
   } catch (error) {
-    console.error('Error fetching variables:', error); // Log any errors
+    console.error('Error fetching variables:', error); // Log errors
   }
 }
 
 // Update variables and send them to the backend
 async function updateVariables() {
-  const inputs = document.querySelectorAll('#variables input'); // Get all input fields
+  const inputs = document.querySelectorAll('#variables select, #variables input'); // Get all dropdowns and text inputs
   const updatedVariables = {};
 
-  // Collect the updated values from the input fields
+  // Collect the updated values from the fields
   inputs.forEach(input => {
     updatedVariables[input.id] = input.value;
   });
 
   try {
-    // Send the updated variables to the backend
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,7 +80,7 @@ async function updateVariables() {
       alert('Failed to update variables.');
     }
   } catch (error) {
-    console.error('Error updating variables:', error); // Log any errors
+    console.error('Error updating variables:', error); // Log errors
   }
 }
 
