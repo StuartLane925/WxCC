@@ -5,8 +5,8 @@ const allowedValues = {
   Open: ['Open', 'Closed'],
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
-  WhiteboardActive: ['Active', 'Inactive'], // Allowed values for WhiteboardActive
-  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'], // No predefined values for WhiteboardMessage
+  WhiteboardActive: ['Active', 'Inactive'],
+  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'],
 };
 
 // Fetch current variable values from the backend
