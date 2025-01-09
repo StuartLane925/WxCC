@@ -1,7 +1,7 @@
 {
-  "Open": "Yes",
+  "Open": "Open",
   "Emergency": "No",
-  "CCBEnabled": "True"
-  "WhiteboardActive": "No"
-  "WhiteboardMessage": "1"
+  "CCBEnabled": "Enabled",
+  "WhiteboardActive": "Inactive",
+  "WhiteboardMessage": "Default"
 }
