@@ -4,13 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modify Variables</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #variables {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .variable {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+    }
+
+    .variable label {
+      flex: 1;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .variable select,
+    .variable input {
+      flex: 2;
+      text-align: right;
+    }
+
+    #updateButton {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #updateButton:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
   <h1>Modify Variables</h1>
-  <div id="variables">
-    <!-- Dropdowns will be dynamically created here -->
-  </div>
+  <div id="variables"></div>
   <button id="updateButton">Update Variables</button>
+
   <script src="script.js"></script>
 </body>
 </html>
