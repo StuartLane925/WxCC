@@ -68,6 +68,16 @@ async function updateVariables() {
     updatedVariables[input.id] = input.value;
   });
 
+  // Show a confirmation dialog with the changes
+  const confirmationMessage = `You are about to update the following variables:\n\n${Object.entries(updatedVariables)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join('\n')}\n\nDo you want to proceed?`;
+
+  if (!window.confirm(confirmationMessage)) {
+    // If the user clicks "Cancel," exit the function
+    return;
+  }
+
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -85,6 +95,7 @@ async function updateVariables() {
     console.error('Error updating variables:', error); // Log errors
   }
 }
+
 
 // Attach the update function to the button
 document.getElementById('updateButton').addEventListener('click', updateVariables);
