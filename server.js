@@ -6,8 +6,14 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Configure CORS options
+const corsOptions = {
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST'], // Allow GET and POST
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
+
 // Middleware
-app.use(cors()); // Enable CORS to allow iframe loading from different origins
+app.use(cors(corsOptions)); // Enable CORS to allow iframe loading from different origins
 app.use(express.json());
 app.use(express.static(path.join(__dirname))); // Serve static files from the root directory
 
