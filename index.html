@@ -1,71 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modify Call Center Settings</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      padding: 0;
-      background-color: #f4f4f9;
-      color: #333;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    #variables {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .variable {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px;
-    }
-
-    .variable label {
-      flex: 1;
-      text-align: left;
-      font-weight: bold;
-    }
-
-    .variable select,
-    .variable input {
-      flex: 2;
-      text-align: right;
-    }
-
-    #updateButton {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #updateButton:hover {
-      background-color: #45a049;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify Variables</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include a date and time picker library, e.g., jQuery UI DatePicker -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
-  <h1>Modify Call Center Settings</h1>
-  <div id="variables"></div>
-  <button id="updateButton">Commit Changes</button>
+    <h1>Modify Variables</h1>
+    <div id="variables">
+        <!-- Date and time picker -->
+        <div class="variable">
+            <label for="Open">Open:</label>
+            <input type="text" id="Open" name="Open" placeholder="Select date and time">
+        </div>
+    </div>
+    <button id="updateButton">Update Variables</button>
 
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
