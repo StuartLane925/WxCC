@@ -2,7 +2,7 @@ const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Use the backend API
 
 // Define allowed values for each variable
 const allowedValues = {
-  Open: ['Open', 'Closed', 'Emergency'],
+  Open: ['Open', 'Closed'],
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
   WhiteboardActive: ['Active', 'Inactive'],
