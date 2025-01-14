@@ -6,7 +6,7 @@ const allowedValues = {
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
   WhiteboardActive: ['Active', 'Inactive'],
-  WhiteboardMessage: ['Default', 'Message 1', 'Message 2'] // No predefined values for WhiteboardMessage
+  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'] // No predefined values for WhiteboardMessage
 };
 
 // Fetch current variable values from the backend
