@@ -6,7 +6,7 @@ const allowedValues = {
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
   WhiteboardActive: ['Active', 'Inactive'],
-  WhiteboardMessage: ['Default', 'Msg1', 'Msg2']
+  WhiteboardMessage: [] // No predefined values for WhiteboardMessage
 };
 
 // Fetch current variable values from the backend
@@ -42,27 +42,22 @@ async function fetchVariables() {
 
         variableDiv.innerHTML = `<label>${key}:</label>`;
         variableDiv.appendChild(selectElement);
-      } else {
-        // Fallback to a text input if no predefined options
+      } else if (key === 'NewTextField') {
+        // Handle NewTextField specifically with larger size and character limit
         variableDiv.innerHTML = `
           <label>${key}:</label>
-          <input type="text" id="${key}" value="${value}" ${key === 'NewTextField' ? 'maxlength="256"' : ''} />
+          <input type="text" id="${key}" value="${value}" maxlength="256" style="width: 100%; height: 80px;" />
+        `;
+      } else {
+        // Fallback to a text input for other variables
+        variableDiv.innerHTML = `
+          <label>${key}:</label>
+          <input type="text" id="${key}" value="${value}" />
         `;
       }
 
       variablesContainer.appendChild(variableDiv);
     });
-
-    // Add the new text field dynamically if not already in variables.json
-    if (!data.NewTextField) {
-      const newFieldDiv = document.createElement('div');
-      newFieldDiv.className = 'variable';
-      newFieldDiv.innerHTML = `
-        <label>NewTextField:</label>
-        <input type="text" id="NewTextField" maxlength="256" />
-      `;
-      variablesContainer.appendChild(newFieldDiv);
-    }
 
   } catch (error) {
     console.error('Error fetching variables:', error);
