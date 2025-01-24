@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(cors()); // Allow cross-origin requests
 app.use(express.json());
-app.use(express.static(path.join(__dirname))); // Serve static files from the current directory
+app.use(express.static(path.join(__dirname))); // Serve static files
 
 // Path to variables.json
 const variablesPath = path.join(__dirname, 'variables.json');
