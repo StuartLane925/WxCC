@@ -14,6 +14,16 @@ app.use(express.static(path.join(__dirname))); // Serve static files from the cu
 // Path to variables.json
 const variablesPath = path.join(__dirname, 'variables.json');
 
+// Default variables structure
+const defaultVariables = {
+  Open: "Open",
+  Emergency: "No",
+  CCBEnabled: "Enabled",
+  WhiteboardActive: "Inactive",
+  WhiteboardMessage: "Default",
+  NewTextField: "" // Default value for the new text box field
+};
+
 // Endpoint to get variables
 app.get('/api/variables', (req, res) => {
   fs.readFile(variablesPath, 'utf8', (err, data) => {
@@ -21,7 +31,18 @@ app.get('/api/variables', (req, res) => {
       console.error('Error reading variables file:', err);
       return res.status(500).json({ error: 'Unable to read variables file' });
     }
-    res.json(JSON.parse(data)); // Send variables as JSON
+
+    let variables;
+    try {
+      variables = JSON.parse(data);
+    } catch (parseError) {
+      console.error('Error parsing variables file:', parseError);
+      return res.status(500).json({ error: 'Unable to parse variables file' });
+    }
+
+    // Ensure all expected variables are present, using default values if missing
+    const updatedVariables = { ...defaultVariables, ...variables };
+    res.json(updatedVariables);
   });
 });
 
@@ -29,7 +50,10 @@ app.get('/api/variables', (req, res) => {
 app.post('/api/variables', (req, res) => {
   const newVariables = req.body;
 
-  fs.writeFile(variablesPath, JSON.stringify(newVariables, null, 2), 'utf8', (err) => {
+  // Ensure all expected variables are included
+  const updatedVariables = { ...defaultVariables, ...newVariables };
+
+  fs.writeFile(variablesPath, JSON.stringify(updatedVariables, null, 2), 'utf8', (err) => {
     if (err) {
       console.error('Error writing variables file:', err);
       return res.status(500).json({ error: 'Unable to save variables file' });
