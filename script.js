@@ -1,13 +1,12 @@
-const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Backend API URL
+const apiUrl = 'https://wxcc.onrender.com/api/variables'; // Use the backend API URL
 
-// Define allowed values for dropdown variables (optional for new text box)
+// Define allowed values for each variable
 const allowedValues = {
-  Open: ['Open', 'Closed', 'Emergency'],
+  Open: ['Open', 'Closed'],
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
   WhiteboardActive: ['Active', 'Inactive'],
-  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'], // No predefined values
-  CustomMessage: [] // For the new text box
+  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'] // No predefined values for WhiteboardMessage
 };
 
 // Fetch current variable values from the backend
@@ -21,11 +20,12 @@ async function fetchVariables() {
     const variablesContainer = document.getElementById('variables');
     variablesContainer.innerHTML = ''; // Clear existing variables
 
-    // Loop through the data and create inputs or dropdowns for each variable
+    // Loop through the data and create dropdowns or text inputs for each variable
     Object.entries(data).forEach(([key, value]) => {
       const variableDiv = document.createElement('div');
       variableDiv.className = 'variable';
 
+      // Check if there are allowed values for this variable
       const options = allowedValues[key] || [];
 
       if (options.length > 0) {
@@ -44,7 +44,7 @@ async function fetchVariables() {
         variableDiv.innerHTML = `<label>${key}:</label>`;
         variableDiv.appendChild(selectElement);
       } else {
-        // Create a text input for variables without predefined options
+        // Fallback to a text input if no predefined options
         variableDiv.innerHTML = `
           <label>${key}:</label>
           <input type="text" id="${key}" value="${value}" />
@@ -53,18 +53,8 @@ async function fetchVariables() {
 
       variablesContainer.appendChild(variableDiv);
     });
-
-    // Add the new text box field dynamically
-    const newFieldDiv = document.createElement('div');
-    newFieldDiv.className = 'variable';
-    newFieldDiv.innerHTML = `
-      <label>NewTextField:</label>
-      <input type="text" id="CustomMessage" value="${data.CustomMessage || ''}" />
-    `;
-    variablesContainer.appendChild(newFieldDiv);
-
   } catch (error) {
-    console.error('Error fetching variables:', error);
+    console.error('Error fetching variables:', error); // Log errors
   }
 }
 
@@ -77,6 +67,16 @@ async function updateVariables() {
   inputs.forEach(input => {
     updatedVariables[input.id] = input.value;
   });
+
+  // Show a confirmation dialog with the changes
+  const confirmationMessage = `You are about to update the following variables:\n\n${Object.entries(updatedVariables)
+    .map(([key, value]) => `${key}: ${value}`)
+    .join('\n')}\n\nDo you want to proceed?`;
+
+  if (!window.confirm(confirmationMessage)) {
+    // If the user clicks "Cancel," exit the function
+    return;
+  }
 
   try {
     const response = await fetch(apiUrl, {
@@ -92,9 +92,10 @@ async function updateVariables() {
       alert('Failed to update variables.');
     }
   } catch (error) {
-    console.error('Error updating variables:', error);
+    console.error('Error updating variables:', error); // Log errors
   }
 }
+
 
 // Attach the update function to the button
 document.getElementById('updateButton').addEventListener('click', updateVariables);

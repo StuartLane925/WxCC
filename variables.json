@@ -3,6 +3,5 @@
   "Emergency": "No",
   "CCBEnabled": "Enabled",
   "WhiteboardActive": "Inactive",
-  "WhiteboardMessage": "Default",
-  "CustomMessage": ""
+  "WhiteboardMessage": "Default"
 }
