@@ -21,7 +21,7 @@ const defaultVariables = {
   CCBEnabled: "Enabled",
   WhiteboardActive: "Inactive",
   WhiteboardMessage: "Default",
-  NewTextField: "" // Default value for the new text box field
+  CustomMessage: "" // Default value for the new text box field
 };
 
 // Endpoint to get variables
