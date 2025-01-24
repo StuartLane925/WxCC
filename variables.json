@@ -3,5 +3,6 @@
   "Emergency": "No",
   "CCBEnabled": "Enabled",
   "WhiteboardActive": "Inactive",
-  "WhiteboardMessage": "Default"
+  "WhiteboardMessage": "Default",
+  "NewTextField": ""
 }
