@@ -6,7 +6,7 @@ const allowedValues = {
   Emergency: ['Yes', 'No'],
   CCBEnabled: ['Enabled', 'Disabled'],
   WhiteboardActive: ['Active', 'Inactive'],
-  WhiteboardMessage: ['Default', 'Msg1', 'Msg2'] // No predefined values for WhiteboardMessage
+  WhiteboardMessage: [] // No predefined values for WhiteboardMessage
 };
 
 // Fetch current variable values from the backend
@@ -43,10 +43,10 @@ async function fetchVariables() {
         variableDiv.innerHTML = `<label>${key}:</label>`;
         variableDiv.appendChild(selectElement);
       } else if (key === 'NewTextField') {
-        // Handle NewTextField specifically with larger size and character limit
+        // Handle NewTextField specifically with a textarea for multiline input
         variableDiv.innerHTML = `
           <label>${key}:</label>
-          <input type="text" id="${key}" value="${value}" maxlength="256" style="width: 100%; height: 80px;" />
+          <textarea id="${key}" maxlength="256" style="width: 100%; height: 80px; resize: none; overflow-wrap: break-word;">${value}</textarea>
         `;
       } else {
         // Fallback to a text input for other variables
@@ -66,7 +66,7 @@ async function fetchVariables() {
 
 // Update variables and send them to the backend
 async function updateVariables() {
-  const inputs = document.querySelectorAll('#variables select, #variables input'); // Get all inputs
+  const inputs = document.querySelectorAll('#variables select, #variables input, #variables textarea'); // Get all inputs and textareas
   const updatedVariables = {};
 
   inputs.forEach(input => {
