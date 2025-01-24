@@ -42,8 +42,8 @@ async function fetchVariables() {
 
         variableDiv.innerHTML = `<label>${key}:</label>`;
         variableDiv.appendChild(selectElement);
-      } else if (key === 'NewTextField') {
-        // Handle NewTextField specifically with a textarea for multiline input
+      } else if (key === 'CustomMessage') {
+        // Handle CustomMessage specifically with a textarea for multiline input
         variableDiv.innerHTML = `
           <label>${key}:</label>
           <textarea id="${key}" maxlength="256" style="width: 100%; height: 80px; resize: none; overflow-wrap: break-word;">${value}</textarea>
